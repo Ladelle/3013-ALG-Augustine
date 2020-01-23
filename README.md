@@ -3,6 +3,6 @@
 #### Email: ladelle2016@gmail.com
 #### Website: N/A YET
 #### Image:
- ![oceandell](https://user-images.githubusercontent.com/47011627/72969601-6f94e980-3d8b-11ea-8799-904a73a8259d.JPG)
+ ![oceandell](https://user-images.githubusercontent.com/47011627/72969601-6f94e980-3d8b-11ea-8799-904a73a8259d.JPG =320x320)
 #### Avatar:
  ![yemaya](https://user-images.githubusercontent.com/47011627/73028528-5297ff00-3dfb-11ea-98fb-3d88f77cea53.jpg)
