@@ -5,5 +5,5 @@
 #### Image:
  ![oceandell](https://user-images.githubusercontent.com/47011627/72969601-6f94e980-3d8b-11ea-8799-904a73a8259d.JPG)
 #### Avatar:
-![Avatar](C:\Users\Ladelle\Desktop\avatar.jpg)
+![Avatar](avatar.jpg)
 
