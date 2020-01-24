@@ -3,8 +3,7 @@
 #### Email: ladelle2016@gmail.com
 #### Website: N/A YET
 #### Image:
-<p> <img src = "https://user-images.githubusercontent.com/47011627/72969601-6f94e980-3d8b-11ea-8799-904a73a8259d.JPG" alt = "oceandell" width= "300" height = "320"></p>
+![oceandell](https://user-images.githubusercontent.com/47011627/73045198-922e0d80-3e32-11ea-82b1-b168961c026b.JPG)
 
 #### Avatar:
-<p> <img src = "https://user-images.githubusercontent.com/47011627/73028528-5297ff00-3dfb-11ea-98fb-3d88f77cea53.jpg" alt = "yemaya" width= "100" height= "100"> </p>
-
+![avatar](https://user-images.githubusercontent.com/47011627/73045231-b0940900-3e32-11ea-93d7-de5dfb372f9b.jpg)
