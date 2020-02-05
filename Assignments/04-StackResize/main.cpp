@@ -2,241 +2,505 @@
 //
 // Author:           Ladelle Augustine
 // Email:            ladelle2016@gmail.com
-// Label:            P01
-// Title:            Assignment 4 - Resizing The Stack
+// Label:            04-P01
+// Title:			 Assignment 4 - Array Based Stack
 // Course:           3013
 // Semester:         Spring 2020
 //
-// Description: .....
-//       Overview of a class implementing an array based stack
+// Description:
+//       Overview of a class implementing an array based stack and Resizes the 
+//       Stack, if the stack is full or half empty.
 //
 /////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
+#include <fstream>
+#include <exception>
+
+
+
 
 using namespace std;
 
 /**
  * ArrayStack
- * 
+ *
  * Description:
  *      Array based stack
- * 
+ *
  * Public Methods:
  *      - See class below
- * 
- * Usage: 
+ *
+ * Usage:
  *      - See main program
- *      
+ *
  */
-class ArrayStack{
+class ArrayStack {
 private:
-  int *A;           // pointer to array of int's
-  int size;         // current max stack size
-  int top;          // top of stack 
+	int *A;                // pointer to array of int's
+	int size;			   // current max stack size
+	int top;               // top of stack 
+	int G;                 // # of array growth
+	int Rcount;             // counting shrink & growth
 
 public:
- /**
-  * ArrayStack
-  * 
-  * Description:
-  *      Constructor no params
-  * 
-  * Params:
-  *     - None
-  * 
-  * Returns:
-  *     - NULL
-  */
-  ArrayStack(){
-    size = 10;
-    A = new int[size];
-    top = -1;
-  }
+	/**
+	 * ArrayStack
+	 *
+	 * Description:
+	 *      Constructor no params
+	 *
+	 * Params:
+	 *     - None
+	 *
+	 * Returns:
+	 *     - NULL
+	 */
+	ArrayStack() {
+		size = 10;
+		A = new int[size];
+		top = -1;
+		G = 0;
+		Rcount = 0;
+	}
 
- /**
-  * ArrayStack
-  * 
-  * Description:
-  *      Constructor size param
-  * 
-  * Params:
-  *     - int size
-  * 
-  * Returns:
-  *     - NULL
-  */
-  ArrayStack(int s){
-    size = s;
-    A = new int[s];
-    top = -1;
-  }
+	/**
+	 * ArrayStack
+	 *
+	 * Description:
+	 *      Constructor size param
+	 *
+	 * Params:
+	 *     - int size
+	 *
+	 * Returns:
+	 *     - NULL
+	 */
+	ArrayStack(int s) {
+		size = s;
+		A = new int[s];
+		top = -1;
+		G = 0;
+		Rcount = 0;
+	}
 
- /**
-  * Public bool: Empty
-  * 
-  * Description:
-  *      Stack empty?
-  * 
-  * Params:
-  *      NULL
-  * 
-  * Returns:
-  *      [bool] true = empty
-  */
-  bool Empty(){
-    return (top <= -1);
-  }
-  
- /**
-  * Public bool: Full
-  * 
-  * Description:
-  *      Stack full?
-  * 
-  * Params:
-  *      NULL
-  * 
-  * Returns:
-  *      [bool] true = full
-  */
-  bool Full(){
-    return (top >= size-1);
-  }
+	/**
+	 * Public bool: Empty
+	 *
+	 * Description:
+	 *      Stack empty?
+	 *
+	 * Params:
+	 *      NULL
+	 *
+	 * Returns:
+	 *      [bool] true = empty
+	 */
+	bool Empty() {
+		return (top <= -1);
+	}
 
- /**
-  * Public int: Peek
-  * 
-  * Description:
-  *      Returns top value without altering the stack
-  * 
-  * Params:
-  *      NULL
-  * 
-  * Returns:
-  *      [int] top value if any
-  */
-  int Peek(){
-    if(!Empty()){
-      return A[top];
-    }
-    
-    return -99; // some sentinel value
-                // not a good solution
-  }
+	/**
+	 * Public bool: Full
+	 *
+	 * Description:
+	 *      Stack full?
+	 *
+	 * Params:
+	 *      NULL
+	 *
+	 * Returns:
+	 *      [bool] true = full
+	 */
+	bool Full() {
+		return (top >= size - 1);
+	}
 
- /**
-  * Public int: Pop
-  * 
-  * Description:
-  *      Returns top value and removes it from stack
-  * 
-  * Params:
-  *      NULL
-  * 
-  * Returns:
-  *      [int] top value if any
-  */
-  int Pop(){
-    if(!Empty()){
-      return A[top--];
-    }
+	/**
+	 * Public int: Peek
+	 *
+	 * Description:
+	 *      Returns top value without altering the stack
+	 *
+	 * Params:
+	 *      NULL
+	 *
+	 * Returns:
+	 *      [int] top value if any
+	 */
+	int Peek() {
+		if (!Empty()) {
+			return A[top];
+		}
 
-    return -99; // some sentinel value
-                // not a good solution
-  }
+		return -99; // some sentinel value
+					// not a good solution
+	}
 
- /**
-  * Public void: Print
-  * 
-  * Description:
-  *      Prints stack to standard out
-  * 
-  * Params:
-  *      NULL
-  * 
-  * Returns:
-  *      NULL
-  */
-  void Print(){
-    for(int i=0;i<=top;i++){
-      cout<<A[i]<<" ";
-    }
-    cout<<endl;
-  } 
+	/**
+	 * Public int: Pop
+	 *
+	 * Description:
+	 *      Returns top value and removes it from stack
+	 *
+	 * Params:
+	 *      NULL
+	 *
+	 * Returns:
+	 *      [int] top value if any
+	 */
+	int Pop()
+	{
 
- /**
-  * Public bool: Push
-  * 
-  * Description:
-  *      Adds an item to top of stack
-  * 
-  * Params:
-  *      [int] : item to be added
-  * 
-  * Returns:
-  *      [bool] ; success = true
-  */
-  bool Push(int x){
-    if(Full()){
-      Resize();
-    }
-    if(!Full()){
-      A[++top] = x;
-      return true;
-    }
-    
-    return false;
-    
-  }
 
- /**
-  * Public void: Resize
-  * 
-  * Description:
-  *      Resizes the container for the stack by doubling
-  *      its capacity
-  * 
-  * Params:
-  *      NULL
-  * 
-  * Returns:
-  *      NULL
-  */
-  void Resize(){
-    int newSize = size*2;       // double size of original
-    int *B = new int[newSize];  // allocate new memory
+		if (!Empty()) {
 
-    for(int i=0;i<size;i++){    // copy values to new array
-      B[i] = A[i];
-    }
+			CheckResize();           // call to resize check
 
-    delete [] A;                // delete old array
+			return A[top--];
+		}
 
-    size = newSize;             // save new size
+		return -99;                  // some sentinel value
+					                 // not a good solution
+	}
 
-    A = B;                      // reset array pointer
 
-  }
 
+	/**
+	 * Public bool: Push
+	 *
+	 * Description:
+	 *      Adds an item to top of stack and calls CheckResize function.
+	 *
+	 * Params:
+	 *      [int] : item to be added
+	 *
+	 * Returns:
+	 *      [bool] ; success = true
+	 */
+	bool Push(int x) {
+
+
+		if (Full()) {
+
+			CheckResize();            // calling resize check
+		}
+		if (!Full())
+		{
+			CheckResize();            // calling resize check
+
+			A[++top] = x;
+			return true;
+		}
+
+		return false;
+
+	}
+	/**
+ * Public void: ContainerGrow
+ *
+ * Description:
+ *      Resizes the container for the stack by increasing the stack by 1.75
+ *      when the stack becomes full.
+ *
+ * Params:
+ *      NULL
+ *
+ * Returns:
+ *      NULL
+ */
+
+	void ContainerGrow()
+	{
+		G++;                                // counting growing stack
+		
+    	int newSize = (size * 1.75);        // size * 1.75
+
+			int *B = new int[newSize];          // creates new array.
+
+			for (int i = 0; i < size; i++) {
+				B[i] = A[i-1];
+			}
+
+			 	delete[] A; // deletes array
+			size = newSize;
+			A = B;                              // resets array pointer
+			
+
+
+			Rcount++;                            // counting resize amount
+		
+	}
+
+	/**
+	 * Public void: ContainerShrink
+	 *
+	 * Description:
+	 *      Resizes the container for the stack by decreasing the stack by .5
+	 *      when the stack becomes half empty, after at least gettin full once.
+	 *
+	 * Params:
+	 *      NULL
+	 *
+	 * Returns:
+	 *      NULL
+	 */
+	void ContainerShrink()
+	{
+
+		int newSize;
+		newSize = (size * 0.5);      // shrinks size.
+
+		int *B = new int[newSize];  // CREATES NEW ARRAY
+
+		for (int i = 0; i < size; i++)
+		{
+			B[i] = A[i-1];
+		}
+		A = 0;
+		delete[] A; 
+		size = newSize;
+
+		A = B;
+		
+		Rcount++; // counting resize amount
+
+	}
+		/**
+		 * Public void: CheckResize
+		 *
+		 * Description:
+		 *      Checks the Resizes for array if stack is full, if stack is half full
+		 *       and if stack has been full at least once to shrink it.
+		 *       It calls the containerGrow and containershrink functions.
+		 *
+		 * Params:
+		 *      NULL
+		 *
+		 * Returns:
+		 *      NULL
+		 */
+	void CheckResize()
+	{
+
+		if (Full())
+		{
+			ContainerGrow();
+		}
+		else if ((top + 1) <= (size / 2))
+		{
+			if (G >= 1 && size > 1)                  // checks if array has been full at least once.
+			{
+				ContainerShrink();
+			}
+		}
+		else //if (((top + 1) / size) >= 1)
+		{
+			ContainerGrow();
+		}
+
+
+	}
+
+
+	/**
+ * Public void: Print
+ *
+ * Description:
+ *      Prints stack to standard out
+ *
+ * Params:
+ *      NULL
+ *
+ * Returns:
+ *      NULL
+ */
+	void Print() {
+		for (int i = 0; i <= top; i++) {
+			cout << A[i] << " ";
+		}
+		cout << endl;
+		// MUST HAVE IN CODE
+		cout << "################################################### " << endl;
+		cout << "Assignment 4 - Resizing the Stack" << endl;
+		cout << "CMPS 3013" << endl;
+		cout << "Ladelle Augustine" << endl;
+		cout << " Max Stack Size: " << G << endl; //NEED TO PLACE VALUE
+		cout << " Stack Resized: " << Rcount << " times" << endl; // NEED TO PLACE AMOUNT OF TIME
+		cout << " End Stack Size: " << size << endl; // NEED TO PLACE VALUE
+
+		cout << "################################################### " << endl;
+	}
+	~ArrayStack() // destructor maybe might help free up space
+	{
+		delete[] A;
+	}
 };
-
 // MAIN DRIVER
 // Simple Array Based Stack Usage:
-int main() {
-  ArrayStack stack;
-  int r = 0;
+int main()
+{
 
-  for(int i=0;i<20;i++){
-    r = rand() % 100;
-    r = i+1;
-    if(!stack.Push(r)){
-      cout<<"Push failed"<<endl;
-    }
-  }
 
-  for(int i=0;i<7;i++){
-    stack.Pop();
-  }
+	ifstream infile("nums.dat");                  // opening file
+	ofstream outfile("output.txt");              //   putting in ouput file
 
-  stack.Print();
+	ArrayStack stack;
+
+	short k;
+	char c;
+
+	if (!infile.eof())
+	{
+		while (infile >> c)
+		{
+			switch (c)
+			{
+			case'1':
+
+				k = c - '0';
+
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+				break;
+
+			case'2':
+
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+				break;
+
+			case '3':
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+
+				break;
+
+			case '4':
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+
+				break;
+
+			case '5':
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+
+				break;
+
+			case'6':
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+
+				break;
+
+			case'7':
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+
+				break;
+
+			case'8':
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+
+				break;
+
+			case '9':
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+
+				break;
+
+			case '0':
+				k = c - '0';
+				if (k % 2 == 0)
+				{
+					stack.Push(k);
+				}
+				else
+				{
+					stack.Pop();
+				}
+
+				break;
+
+			default:printf("Not a Number");
+
+
+
+
+			}
+		}
+
+	}
+
+	stack.Print();
+
+	infile.close();
+	outfile.close();
+	system("pause");
+	return 0;
+
 }
