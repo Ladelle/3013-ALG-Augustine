@@ -14,10 +14,6 @@
 /////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <fstream>
-#include <exception>
-
-
-
 
 using namespace std;
 
@@ -52,7 +48,7 @@ public:
 	 * Params:
 	 *     - None
 	 *
-	 * Returns: 
+	 * Returns:
 	 *     - NULL
 	 */
 	ArrayStack() {
@@ -130,6 +126,7 @@ public:
 	int Peek() {
 		if (!Empty()) {
 			return A[top];
+			
 		}
 
 		return -99; // some sentinel value
@@ -150,17 +147,14 @@ public:
 	 */
 	int Pop()
 	{
-
-
-		if (!Empty()) {
-
-			CheckResize();           // call to resize check
-
+		   
+		if (!Empty()) 
+		{
+			CheckResize();
 			return A[top--];
 		}
-
 		return -99;                  // some sentinel value
-					                 // not a good solution
+									 // not a good solution
 	}
 
 
@@ -182,13 +176,20 @@ public:
 
 		if (Full()) {
 
-			CheckResize();            // calling resize check
+			ContainerGrow();                          // check resize will call growth in checkresize
+			G++;					//CheckResize();            // calling resize check
 		}
-		if (!Full())
+		if (Empty())
 		{
-			CheckResize();            // calling resize check
-
+			               
 			A[++top] = x;
+			//CheckResize();// resize
+			return true;
+		}
+		else
+		{
+			A[++top] = x;
+			CheckResize(); 
 			return true;
 		}
 
@@ -211,24 +212,24 @@ public:
 
 	void ContainerGrow()
 	{
-		G++;                                // counting growing stack
-		
-    	int newSize = (size * 1.75);        // size * 1.75
 
-			int *B = new int[newSize];          // creates new array.
+		int newSize = (size * 1.75);        // size * 1.75
 
-			for (int i = 0; i < size; i++) {
-				B[i] = A[i-1];
-			}
+		int *B = new int[newSize];          // creates new array.
 
-			 	delete[] A; // deletes array
-			size = newSize;
-			A = B;                              // resets array pointer
-			
+		for (int i = 0; i < size; i++) {
+			B[i] = A[i - 1];
+		}
+
+		delete[] A; // deletes array
+
+		size = newSize;
+		A = B;                              // resets array pointer
 
 
-			Rcount++;                            // counting resize amount
-		
+
+		Rcount++;                            // counting resize amount
+
 	}
 
 	/**
@@ -246,59 +247,52 @@ public:
 	 */
 	void ContainerShrink()
 	{
+		int newSize = (size * 0.5);      // shrinks size.
 
-		int newSize;
-		newSize = (size * 0.5);      // shrinks size.
+			int *B = new int[newSize];  // CREATES NEW ARRAY
 
-		int *B = new int[newSize];  // CREATES NEW ARRAY
+			for (int i = 0; i < newSize; i++)
+			{
+				B[i] = A[i - 1];
+			}
 
-		for (int i = 0; i < size; i++)
-		{
-			B[i] = A[i-1];
-		}
-		A = 0;
-		delete[] A; 
-		size = newSize;
+			delete[] A;
+			size = newSize;
 
-		A = B;
+			A = B;
 		
 		Rcount++; // counting resize amount
 
 	}
-		/**
-		 * Public void: CheckResize
-		 *
-		 * Description:
-		 *      Checks the Resizes for array if stack is full, if stack is half full
-		 *       and if stack has been full at least once to shrink it.
-		 *       It calls the containerGrow and containershrink functions.
-		 *
-		 * Params:
-		 *      NULL
-		 *
-		 * Returns:
-		 *      NULL
-		 */
+	/**
+	 * Public void: CheckResize
+	 *
+	 * Description:
+	 *      Checks the Resizes for array if stack is full, if stack is half full
+	 *       and if stack has been full at least once to shrink it.
+	 *       It calls the containerGrow and containershrink functions.
+	 *
+	 * Params:
+	 *      NULL
+	 *
+	 * Returns:
+	 *      NULL
+	 */
+	// may just be to check to see if needs to shrink or keep doing what its doing
 	void CheckResize()
 	{
+		int h = (size / 2); // half the size
+		int r = (h - 1); // ratio half one less than half size
+									  //int Ihe;  // Is Half Empty testing
 
-		if (Full())
+		if (Empty() == false && Full() == false) // if stack is not full and not empty
 		{
-			ContainerGrow();
-		}
-		else if ((top + 1) <= (size / 2))
-		{
-			if (G >= 1 && size > 1)                  // checks if array has been full at least once.
+			if (h >= 20 && G >= 1 && r < h) //< r == true ) 
 			{
-				ContainerShrink();
+
+				ContainerShrink(); // if the stack has grown at least one time and the size of stack is greater than 20 shrink the stack
 			}
 		}
-		else //if (((top + 1) / size) >= 1)
-		{
-			ContainerGrow();
-		}
-
-
 	}
 
 
@@ -335,166 +329,48 @@ public:
 		delete[] A;
 	}
 };
+
 // MAIN DRIVER
 // Simple Array Based Stack Usage:
 int main()
 {
 
 
-	ifstream infile("nums.dat");                  // opening file
+	ifstream infile("nums_test.dat");                  // opening file
 	ofstream outfile("output.txt");              //   putting in ouput file
 
 	ArrayStack stack;
 
-	short k;
-	char c;
-
+	int number;
 	if (!infile.eof())
 	{
-		while (infile >> c)
+		while (infile >> number)
 		{
-			switch (c)
+			if (number % 2 == 0)
 			{
-			case'1':
-
-				k = c - '0';
-
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-				break;
-
-			case'2':
-
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-				break;
-
-			case '3':
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-
-				break;
-
-			case '4':
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-
-				break;
-
-			case '5':
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-
-				break;
-
-			case'6':
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-
-				break;
-
-			case'7':
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-
-				break;
-
-			case'8':
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-
-				break;
-
-			case '9':
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-
-				break;
-
-			case '0':
-				k = c - '0';
-				if (k % 2 == 0)
-				{
-					stack.Push(k);
-				}
-				else
-				{
-					stack.Pop();
-				}
-
-				break;
-
-			default:printf("Not a Number");
-
-
-
-
+				stack.Push(number);
+			}
+			else
+			{
+				stack.Pop();
 			}
 		}
-
 	}
+	/*
+	int r = 0;
+
+	for (int i = 0; i < 50; i++) {
+		r = rand() % 100;
+		r = i + 1;
+		if (!stack.Push(r)) {
+			cout << "Push failed" << endl;
+		}
+	}
+	
+	for (int i = 0; i < 50; i++) {
+		stack.Pop();
+	}
+	*/
 
 	stack.Print();
 
@@ -502,5 +378,4 @@ int main()
 	outfile.close();
 	system("pause");
 	return 0;
-
 }
