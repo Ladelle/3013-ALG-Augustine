@@ -282,7 +282,7 @@ public:
 	void CheckResize()
 	{
 		int h = (size / 2); // half the size
-		int r = (h - 1); // ratio half one less than half size
+		int r = (h - 1); // half one less than half size
 									  //int Ihe;  // Is Half Empty testing
 
 		if (Empty() == false && Full() == false) // if stack is not full and not empty
