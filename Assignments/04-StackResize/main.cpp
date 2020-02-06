@@ -129,8 +129,8 @@ public:
 			
 		}
 
-		return -99; // some sentinel value
-					// not a good solution
+		return -99;          // some sentinel value
+					         // not a good solution
 	}
 
 	/**
@@ -176,8 +176,8 @@ public:
 
 		if (Full()) {
 
-			ContainerGrow();                          // check resize will call growth in checkresize
-			G++;					//CheckResize();            // calling resize check
+			ContainerGrow();         // check resize will call growth in checkresize
+			G++;					           
 		}
 		if (Empty())
 		{
@@ -247,9 +247,9 @@ public:
 	 */
 	void ContainerShrink()
 	{
-		int newSize = (size * 0.5);      // shrinks size.
+		int newSize = (size * 0.5);           // shrinks size.
 
-			int *B = new int[newSize];  // CREATES NEW ARRAY
+			int *B = new int[newSize];        // CREATES NEW ARRAY
 
 			for (int i = 0; i < newSize; i++)
 			{
@@ -261,7 +261,7 @@ public:
 
 			A = B;
 		
-		Rcount++; // counting resize amount
+		Rcount++;                              // counting resize amount
 
 	}
 	/**
@@ -281,16 +281,16 @@ public:
 	// may just be to check to see if needs to shrink or keep doing what its doing
 	void CheckResize()
 	{
-		int h = (size / 2); // half the size
-		int r = (h - 1); // half one less than half size
-									  //int Ihe;  // Is Half Empty testing
+		int h = (size / 2);                       // half the size
+		int r = (h - 1);                          // half one less than half size
+									             
 
-		if (Empty() == false && Full() == false) // if stack is not full and not empty
+		if (Empty() == false && Full() == false)  // if stack is not full and not empty
 		{
-			if (h >= 20 && G >= 1 && r < h) //< r == true ) 
+			if (h >= 20 && G >= 1 && r < h)       
 			{
 
-				ContainerShrink(); // if the stack has grown at least one time and the size of stack is greater than 20 shrink the stack
+				ContainerShrink();               // if the stack has grown at least one time and the size of stack is greater than 20 shrink the stack
 			}
 		}
 	}
@@ -318,13 +318,13 @@ public:
 		cout << "Assignment 4 - Resizing the Stack" << endl;
 		cout << "CMPS 3013" << endl;
 		cout << "Ladelle Augustine" << endl;
-		cout << " Max Stack Size: " << G << endl; //NEED TO PLACE VALUE
+		cout << " Max Stack Size: " << G << endl;                 // NEED TO PLACE VALUE
 		cout << " Stack Resized: " << Rcount << " times" << endl; // NEED TO PLACE AMOUNT OF TIME
-		cout << " End Stack Size: " << size << endl; // NEED TO PLACE VALUE
+		cout << " End Stack Size: " << size << endl;              // NEED TO PLACE VALUE
 
 		cout << "################################################### " << endl;
 	}
-	~ArrayStack() // destructor maybe might help free up space
+	~ArrayStack()                                                // destructor maybe might help free up space??
 	{
 		delete[] A;
 	}
@@ -337,7 +337,7 @@ int main()
 
 
 	ifstream infile("nums_test.dat");                  // opening file
-	ofstream outfile("output.txt");              //   putting in ouput file
+	ofstream outfile("output.txt");                   //  putting in ouput file
 
 	ArrayStack stack;
 
@@ -373,7 +373,9 @@ int main()
 	*/
 
 	stack.Print();
+	
 
+	
 	infile.close();
 	outfile.close();
 	system("pause");
