@@ -8,8 +8,10 @@
 // Semester:         Spring 2020
 //
 // Description:
-//       Overview of a class implementing an array based stack and Resizes the 
-//       Stack, if the stack is full or half empty.
+//       Overview of a class implementing an array based stack.
+//       Resize the Stack, if the stack is full or half empty.
+//       Calculate the Maximum stack size, the amount of times 
+//       the stack was resized and the end stack size. 
 //
 /////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
@@ -32,11 +34,13 @@ using namespace std;
  */
 class ArrayStack {
 private:
-	int *A;                // pointer to array of int's
-	int size;			   // current max stack size
-	int top;               // top of stack 
-	int G;                 // # of array growth
-	int Rcount;             // counting shrink & growth
+	int* A;									  // Pointer to array of int's
+	int size;								  // Current stack size
+	int top;								  // Top of stack 
+	int G;									  // # of array growth
+	int MaxG;								  // the max size of array
+	int S;									  // Shrink count
+	int Cpop;								  // Call to pop count
 
 public:
 	/**
@@ -56,7 +60,9 @@ public:
 		A = new int[size];
 		top = -1;
 		G = 0;
-		Rcount = 0;
+		MaxG = 0;
+		S = 0;
+		Cpop = 0;
 	}
 
 	/**
@@ -76,14 +82,16 @@ public:
 		A = new int[s];
 		top = -1;
 		G = 0;
-		Rcount = 0;
+		MaxG = 0;
+		S = 0;
+		Cpop = 0; 
 	}
 
 	/**
 	 * Public bool: Empty
 	 *
 	 * Description:
-	 *      Stack empty?
+	 *      Checks to see if stack is empty?
 	 *
 	 * Params:
 	 *      NULL
@@ -99,7 +107,7 @@ public:
 	 * Public bool: Full
 	 *
 	 * Description:
-	 *      Stack full?
+	 *      Checks to see if Stack is full?
 	 *
 	 * Params:
 	 *      NULL
@@ -126,18 +134,18 @@ public:
 	int Peek() {
 		if (!Empty()) {
 			return A[top];
-			
+
 		}
 
-		return -99;          // some sentinel value
-					         // not a good solution
+		return -99;                           // some sentinel value
+							                  // not a good solution
 	}
 
 	/**
 	 * Public int: Pop
 	 *
 	 * Description:
-	 *      Returns top value and removes it from stack
+	 *      Returns top value and removes it from stack also calls CheckResize method.
 	 *
 	 * Params:
 	 *      NULL
@@ -147,14 +155,15 @@ public:
 	 */
 	int Pop()
 	{
-		   
-		if (!Empty()) 
+		Cpop++;
+		if (!Empty())
 		{
 			CheckResize();
+			
 			return A[top--];
 		}
-		return -99;                  // some sentinel value
-									 // not a good solution
+		return -99;                           // some sentinel value
+									          // not a good solution
 	}
 
 
@@ -163,7 +172,8 @@ public:
 	 * Public bool: Push
 	 *
 	 * Description:
-	 *      Adds an item to top of stack and calls CheckResize function.
+	 *      Adds an item to top of stack, if full called ContainerGrow if
+	 *      stack is not empty and not full it calls CheckResize function.
 	 *
 	 * Params:
 	 *      [int] : item to be added
@@ -176,20 +186,19 @@ public:
 
 		if (Full()) {
 
-			ContainerGrow();         // check resize will call growth in checkresize
-			G++;					           
+			ContainerGrow();                // Calls containerGrow because stack is full
+			G++;							// Calculates the amount of times the containerGrow method is called.
 		}
 		if (Empty())
 		{
-			               
+
 			A[++top] = x;
-			//CheckResize();// resize
 			return true;
 		}
 		else
 		{
 			A[++top] = x;
-			CheckResize(); 
+			CheckResize();
 			return true;
 		}
 
@@ -213,23 +222,23 @@ public:
 	void ContainerGrow()
 	{
 
-		int newSize = (size * 1.75);        // size * 1.75
+		int newSize = (size * 1.75);       // Size will increase by (size * 1.75)
 
-		int *B = new int[newSize];          // creates new array.
-
-		for (int i = 0; i < size; i++) {
-			B[i] = A[i - 1];
+		if (newSize > size)				   // Calculates the Maximum size of stack
+		{
+			MaxG = newSize;
 		}
 
-		delete[] A; // deletes array
+		int* B = 0;						   // Creates pointer B to new array.
+		B = new int[newSize];			   // Creates new array B and initilizes size as newSize.
 
-		size = newSize;
-		A = B;                              // resets array pointer
-
-
-
-		Rcount++;                            // counting resize amount
-
+		for (int i = 0; i < size; i++)	   // For loop to copy elements in array A to array B.
+		{
+			B[i] = A[i - 1];
+		}
+		delete[] A;						   // Deletes array A
+		size = newSize;					   // Setting size to what the newSize was.
+		A = B;							   // Resets array pointers.
 	}
 
 	/**
@@ -237,7 +246,8 @@ public:
 	 *
 	 * Description:
 	 *      Resizes the container for the stack by decreasing the stack by .5
-	 *      when the stack becomes half empty, after at least gettin full once.
+	 *      when the stack becomes half empty, after at least getting full once and 
+	 *      the pop function being called at least one time.
 	 *
 	 * Params:
 	 *      NULL
@@ -247,30 +257,30 @@ public:
 	 */
 	void ContainerShrink()
 	{
-		int newSize = (size * 0.5);           // shrinks size.
-
-			int *B = new int[newSize];        // CREATES NEW ARRAY
-
-			for (int i = 0; i < newSize; i++)
-			{
-				B[i] = A[i - 1];
-			}
-
-			delete[] A;
-			size = newSize;
-
-			A = B;
 		
-		Rcount++;                              // counting resize amount
+		int newSize = (size * 0.5);        // Shrinks size.
+
+		int* B = new int[newSize];		   // Creates a new array with pointer B.
+
+		for (int i = 0; i < newSize; i++)  // For loop to copy elements in array A to array B.
+		{
+			B[i] = A[i - 1];
+		}
+
+		delete[] A;							// Deletes array A
+		size = newSize;						// Setting size to what the newSize was.
+
+		A = B;								// Resets array pointer
 
 	}
 	/**
 	 * Public void: CheckResize
 	 *
 	 * Description:
-	 *      Checks the Resizes for array if stack is full, if stack is half full
-	 *       and if stack has been full at least once to shrink it.
-	 *       It calls the containerGrow and containershrink functions.
+	 *      Checks the Resizes for array; if stack is full, if stack is half full,
+	 *      if stack has been full at least once and if pop has been called at least
+	 *      one time to shrink it. This method makes a call to ContainerShrink method.
+	 *      
 	 *
 	 * Params:
 	 *      NULL
@@ -278,25 +288,25 @@ public:
 	 * Returns:
 	 *      NULL
 	 */
-	// may just be to check to see if needs to shrink or keep doing what its doing
 	void CheckResize()
 	{
-		int h = (size / 2);                       // half the size
-		int r = (h - 1);                          // half one less than half size
-									             
+		int h = (size / 2);										// h = Half of the size
+		int r = (h - 1);										// r = the element one less than h. 
 
-		if (Empty() == false && Full() == false)  // if stack is not full and not empty
+		if (Empty() == false && Full() == false)				// If stack is not full and not empty then run the rest. 
 		{
-			if (h >= 20 && G >= 1 && r < h)       
+			if (h >= 20 && G >= 1 && r < h && Cpop >= 1)		// If half size is >=20, has called ContainerGrow more than 1 time,
+															   	//  r < h and  pop has been called more than 1 time call ContainerShrink.
 			{
 
-				ContainerShrink();               // if the stack has grown at least one time and the size of stack is greater than 20 shrink the stack
+				ContainerShrink();								// Calling ContainerShrink method.
+				S++;											// Counting shrinking 
 			}
 		}
 	}
 
 
-	/**
+/**
  * Public void: Print
  *
  * Description:
@@ -308,23 +318,20 @@ public:
  * Returns:
  *      NULL
  */
-	void Print() {
-		for (int i = 0; i <= top; i++) {
-			cout << A[i] << " ";
-		}
-		cout << endl;
-		// MUST HAVE IN CODE
-		cout << "################################################### " << endl;
-		cout << "Assignment 4 - Resizing the Stack" << endl;
-		cout << "CMPS 3013" << endl;
-		cout << "Ladelle Augustine" << endl;
-		cout << " Max Stack Size: " << G << endl;                 // NEED TO PLACE VALUE
-		cout << " Stack Resized: " << Rcount << " times" << endl; // NEED TO PLACE AMOUNT OF TIME
-		cout << " End Stack Size: " << size << endl;              // NEED TO PLACE VALUE
-
-		cout << "################################################### " << endl;
+	void Print(ostream& out)
+	{
+		out << "################################################### " << endl;
+		out << "Assignment 4 - Resizing the Stack" << endl;
+		out << "CMPS 3013" << endl;
+		out << "Ladelle Augustine" << endl;
+		out << "Max Stack Size: " << MaxG << endl;
+		out << "Stack Resized: " << G + S << " times" << endl;
+		out << "End Stack Size: " << size << endl;
+		out << "################################################### " << endl;
 	}
-	~ArrayStack()                                                // destructor maybe might help free up space??
+
+
+	~ArrayStack()                                     // Destructor 
 	{
 		delete[] A;
 	}
@@ -336,48 +343,32 @@ int main()
 {
 
 
-	ifstream infile("nums_test.dat");                  // opening file
-	ofstream outfile("output.txt");                   //  putting in ouput file
+	ifstream infile("nums_test.dat");					  // Opening file
+	ofstream out("outputoutput.txt");                   // Putting in ouput file
 
 	ArrayStack stack;
 
 	int number;
-	if (!infile.eof())
+	if (!infile.eof())                                // If not the end of the file proceed with while statement
 	{
-		while (infile >> number)
+		while (infile >> number)					  // Reading in file data 
 		{
-			if (number % 2 == 0)
+			if (number % 2 == 0)					  // Calculating if the numbers are even.
 			{
-				stack.Push(number);
+				stack.Push(number);                   // If numbers are even then push them into stack.
 			}
 			else
 			{
-				stack.Pop();
+				stack.Pop();						  // If numbers are odd pop from the stack.
 			}
 		}
 	}
-	/*
-	int r = 0;
+	stack.Print(out);
 
-	for (int i = 0; i < 50; i++) {
-		r = rand() % 100;
-		r = i + 1;
-		if (!stack.Push(r)) {
-			cout << "Push failed" << endl;
-		}
-	}
-	
-	for (int i = 0; i < 50; i++) {
-		stack.Pop();
-	}
-	*/
 
-	stack.Print();
-	
-
-	
 	infile.close();
-	outfile.close();
+	out.close();
 	system("pause");
 	return 0;
 }
+
