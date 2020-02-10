@@ -84,7 +84,7 @@ public:
 		G = 0;
 		MaxG = 0;
 		S = 0;
-		Cpop = 0; 
+		Cpop = 0;
 	}
 
 	/**
@@ -138,7 +138,7 @@ public:
 		}
 
 		return -99;                           // some sentinel value
-							                  // not a good solution
+											  // not a good solution
 	}
 
 	/**
@@ -159,11 +159,11 @@ public:
 		if (!Empty())
 		{
 			CheckResize();
-			
+
 			return A[top--];
 		}
 		return -99;                           // some sentinel value
-									          // not a good solution
+											  // not a good solution
 	}
 
 
@@ -246,7 +246,7 @@ public:
 	 *
 	 * Description:
 	 *      Resizes the container for the stack by decreasing the stack by .5
-	 *      when the stack becomes half empty, after at least getting full once and 
+	 *      when the stack becomes half empty, after at least getting full once and
 	 *      the pop function being called at least one time.
 	 *
 	 * Params:
@@ -257,7 +257,7 @@ public:
 	 */
 	void ContainerShrink()
 	{
-		
+
 		int newSize = (size * 0.5);        // Shrinks size.
 
 		int* B = new int[newSize];		   // Creates a new array with pointer B.
@@ -280,7 +280,7 @@ public:
 	 *      Checks the Resizes for array; if stack is full, if stack is half full,
 	 *      if stack has been full at least once and if pop has been called at least
 	 *      one time to shrink it. This method makes a call to ContainerShrink method.
-	 *      
+	 *
 	 *
 	 * Params:
 	 *      NULL
@@ -296,7 +296,7 @@ public:
 		if (Empty() == false && Full() == false)				// If stack is not full and not empty then run the rest. 
 		{
 			if (h >= 20 && G >= 1 && r < h && Cpop >= 1)		// If half size is >=20, has called ContainerGrow more than 1 time,
-															   	//  r < h and  pop has been called more than 1 time call ContainerShrink.
+																//  r < h and  pop has been called more than 1 time call ContainerShrink.
 			{
 
 				ContainerShrink();								// Calling ContainerShrink method.
@@ -306,18 +306,18 @@ public:
 	}
 
 
-/**
- * Public void: Print
- *
- * Description:
- *      Prints stack to standard out
- *
- * Params:
- *      NULL
- *
- * Returns:
- *      NULL
- */
+	/**
+	 * Public void: Print
+	 *
+	 * Description:
+	 *      Prints stack to standard out
+	 *
+	 * Params:
+	 *      NULL
+	 *
+	 * Returns:
+	 *      NULL
+	 */
 	void Print(ostream& out)
 	{
 		out << "################################################### " << endl;
@@ -343,8 +343,8 @@ int main()
 {
 
 
-	ifstream infile("nums_test.dat");					  // Opening file
-	ofstream out("outputoutput.txt");                   // Putting in ouput file
+	ifstream infile("nums2.dat");					  // Opening file
+	ofstream out("output.txt");                   // Putting in ouput file
 
 	ArrayStack stack;
 
