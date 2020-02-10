@@ -2,7 +2,7 @@
 Assignment 4 - Resizing the Stack
 CMPS 3013
 Ladelle Augustine
-Max Stack Size: 152
-Stack Resized: 7 times
-End Stack Size: 38
+Max Stack Size: 40831
+Stack Resized: 26 time(s)
+End Stack Size: 19
 ################################################### 

@@ -158,7 +158,8 @@ public:
 		Cpop++;
 		if (!Empty())
 		{
-			CheckResize();
+	
+			CheckResize();     // calling CheckResize function
 
 			return A[top--];
 		}
@@ -187,19 +188,23 @@ public:
 		if (Full()) {
 
 			ContainerGrow();                // Calls containerGrow because stack is full
-			G++;							// Calculates the amount of times the containerGrow method is called.
+			G++;                           // Calculates the amount of times the containerGrow method is called.
+			return true;
 		}
 		if (Empty())
 		{
 
-			A[++top] = x;
+			A[++top] = x;                   // add to the top of the stack
 			return true;
+			
 		}
-		else
+		else 
 		{
+			
 			A[++top] = x;
 			CheckResize();
 			return true;
+		
 		}
 
 		return false;
@@ -224,19 +229,20 @@ public:
 
 		int newSize = (size * 1.75);       // Size will increase by (size * 1.75)
 
-		if (newSize > size)				   // Calculates the Maximum size of stack
-		{
-			MaxG = newSize;
-		}
-
 		int* B = 0;						   // Creates pointer B to new array.
 		B = new int[newSize];			   // Creates new array B and initilizes size as newSize.
 
-		for (int i = 0; i < size; i++)	   // For loop to copy elements in array A to array B.
+		if (newSize > MaxG)				   // Calculates the Maximum size of stack
 		{
-			B[i] = A[i - 1];
+			MaxG = newSize;
 		}
-		delete[] A;						   // Deletes array A
+	
+		for (int i = 0; i <size; i++)	   // For loop to copy elements in array A to array B.
+		{
+			B[i] = A[i-1];
+		}
+		delete[] A;		
+		 // Deletes array A
 		size = newSize;					   // Setting size to what the newSize was.
 		A = B;							   // Resets array pointers.
 	}
@@ -254,7 +260,7 @@ public:
 	 *
 	 * Returns:
 	 *      NULL
-	 */
+	 */  
 	void ContainerShrink()
 	{
 
@@ -264,7 +270,7 @@ public:
 
 		for (int i = 0; i < newSize; i++)  // For loop to copy elements in array A to array B.
 		{
-			B[i] = A[i - 1];
+			B[i] = A[i-1];
 		}
 
 		delete[] A;							// Deletes array A
@@ -290,21 +296,20 @@ public:
 	 */
 	void CheckResize()
 	{
-		int h = (size / 2);										// h = Half of the size
-		int r = (h - 1);										// r = the element one less than h. 
+		int h =  (size / 2) ;						// h = Half of the size of current items on stack
+ 		int p = (top + 1);										// p = the element one less than h. 
 
 		if (Empty() == false && Full() == false)				// If stack is not full and not empty then run the rest. 
 		{
-			if (h >= 20 && G >= 1 && r < h && Cpop >= 1)		// If half size is >=20, has called ContainerGrow more than 1 time,
-																//  r < h and  pop has been called more than 1 time call ContainerShrink.
+ 			if (size >= 20 && G >= 1 && p <= h && Cpop >= 1)		// If half size is >=20, has called ContainerGrow more than 1 time,
+																//  p < h and  pop has bee   n called more than 1 time call ContainerShrink.
 			{
-
 				ContainerShrink();								// Calling ContainerShrink method.
 				S++;											// Counting shrinking 
 			}
 		}
 	}
-
+	 
 
 	/**
 	 * Public void: Print
@@ -325,7 +330,7 @@ public:
 		out << "CMPS 3013" << endl;
 		out << "Ladelle Augustine" << endl;
 		out << "Max Stack Size: " << MaxG << endl;
-		out << "Stack Resized: " << G + S << " times" << endl;
+		out << "Stack Resized: " << G + S << " time(s)" << endl;
 		out << "End Stack Size: " << size << endl;
 		out << "################################################### " << endl;
 	}
@@ -343,8 +348,8 @@ int main()
 {
 
 
-	ifstream infile("nums2.dat");					  // Opening file
-	ofstream out("output.txt");                   // Putting in ouput file
+	ifstream infile("nums_test.dat");					  // Opening file
+	ofstream out("outputoutput.txt");                   // Putting in ouput file
 
 	ArrayStack stack;
 
