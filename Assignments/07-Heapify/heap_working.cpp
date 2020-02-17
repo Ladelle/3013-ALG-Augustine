@@ -1,4 +1,21 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// Author:           Ladelle Augustine
+// Email:            ladelle2016@gmail.com
+// Label:            07-H02
+// Title:			 Assignment 7 - Heapify
+// Course:           3013
+// Semester:         Spring 2020
+//
+// Description:
+//              This is an overview of the Heap class. Fix Methods in the code snippet
+//               Heapify an unsorted array.
+//
+/////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
+#include "timer.hpp"
+#include <algorithm>
+
 
 using namespace std;
 
@@ -10,25 +27,26 @@ using namespace std;
  *          Heap        : default constructor
  *          Heap(int)   : overload constructor with heap size
  *      private:
- *          BubbleUp    : you comment this
- *          Left        : you comment this
- *          OnHeap      : you comment this
- *          Parent      : you comment this
- *          Right       : you comment this
- *          Swap        : you comment this
+ *          BubbleUp    : swapping the smallest from the bottom up
+ *          Left        : left child 2i
+ *          OnHeap      : checking to still be in heap
+ *          Parent      : parent i/2 
+ *          Right       : right child 2i+1
+ *          Swap        : swaping the smallest values
  *          /// Fix These:
- *          SinkDown    : you comment this
- *          PickChild   : you comment this
+ *          Heapify     : heapify a subtree 
+ *          SinkDown    : to sinkdown by heap properity.
+ *          PickChild   : choosing the smallest child by index. 
  *      public:
- *          Insert      : you comment this
- *          Print       : you comment this
- *          Remove      : you comment this
+ *          Insert      : adding elements to the heap
+ *          Print       : printing out elements in heap
+ *          Remove      : removing elements from the top of the heap
  */
 class Heap {
 private:
-    int size; // size of the array
-    int *H;   // array pointer
-    int end;  // 1 past last item in array
+    int size;                   // size of the array
+    int *H;                     // array pointer
+    int end;                    // 1 past last item in array
 
     /**
    * BubbleUp
@@ -42,7 +60,8 @@ private:
    */
     void BubbleUp(int index) {
         // check parent is not of beginning of array
-        if (Parent(index) >= 1) {
+        if (Parent(index) >= 1) 
+        {
             // index is on array and value is less than parent
             while (index > 1 && H[index] < H[Parent(index)]) {
                 // do a swap
@@ -62,9 +81,7 @@ private:
      * @param  {int} index : index of parent
      * @return {int}       : index of left child
      */
-    int Left(int index) {
-        return 2 * index;
-    }
+    int Left(int index) {  return 2 * index; }
 
     /**
      * OnHeap
@@ -74,9 +91,7 @@ private:
      * @param  {int} index : index to check
      * @return {bool}      : 0 = off heap / 1 = on heap
      */
-    bool OnHeap(int index) {
-        return index < end;
-    }
+    bool OnHeap(int index) {  return index < end;}
 
     /**
      * Parent
@@ -86,9 +101,7 @@ private:
      * @param  {int} index : index to check
      * @return {int}       : parent index
      */
-    int Parent(int index) {
-        return index / 2;
-    }
+    int Parent(int index) { return index / 2;}
 
     /**
      * Right
@@ -98,10 +111,9 @@ private:
      * @param  {int} index : index of parent
      * @return {int}       : index of right child
      */
-    int Right(int index) {
-        return 2 * index + 1;
-    }
+    int Right(int index) { return 2 * index + 1; }
 
+public:
     /**
      * Swap
      * 
@@ -112,11 +124,12 @@ private:
      * @param  {int} j  : index in array
      * @return          : void
      */
-    void Swap(int i, int j) {
+    void Swap(int i, int j)
+     {
         int temp = H[i];
         H[i] = H[j];
         H[j] = temp;
-    }
+     }
 
     ////////////////////////////
     //Fix These Methods
@@ -127,8 +140,26 @@ private:
      * @param  {int*} A   :  array pointer with unsorted values to make into a heap
      * @param  {int} size :  size of new heap
      */
-    void Heapify(int A *, int size) {
-        // do it!
+  void Heapify(int* A, int s) //size and pointer is passed
+    {
+       H = A;         // Setting H to A - sending over from array A
+     
+     
+       end = s;       // relocating end to end of new heap 
+     
+
+                                            /* Build a Heap*/
+        int NLindx = (s / 2) - 1;           // index of the last non-leaf node
+      
+
+        for (int i = NLindx; i > 0; i--)    // builds a heap 
+        {
+            SinkDown(i);                     // calls sinkdown method
+        }
+     
+    
+      
+ 
     }
 
     /**
@@ -140,8 +171,26 @@ private:
      * @param  {int} index  : index to start from in the array
      * @return              : void 
      */
-    void SinkDown(int index) {
-        //do stuff!
+  void SinkDown(int index)
+    {
+        int LeftC= Left(index);      // LeftChild 
+        int RightC= Right(index);    // Rightchile
+        int smallest= index;         // initalizing smallest to index
+     
+        if (LeftC < end && H[LeftC] < H[index])   
+        {
+            smallest = LeftC;   
+        }
+        if (RightC < end && H[RightC] < H[smallest])
+        {
+            smallest = RightC;
+        }
+        if (smallest != index)
+        {
+            Swap(index, smallest);
+            SinkDown(smallest);          // sinking down with the smallest value   
+        }
+
     }
 
     /**
@@ -153,11 +202,38 @@ private:
      * @param  {int} index  : index of parent in the array
      * @return              : index to child 
      */
-    int PickChild(int index) {
-        return 0; // temporary suppress of warning
-    }
+    int PickChild(int index) 
+    {
+          int PickChild(int index); // index of parent in array return index of child
+    
+        while (OnHeap(index))       // making sure on heap
+        {
+            if (end % 2 == 1)       // When NO right child
+            {
+                return Left(index);
+            }
+            else                    // When has TWO children.
+            {
+                if (Right(index) < end)
+                {
+                    if (H[Right(index)] > H[Left(index)])
+                    {
+                        return Left(index);
+                    }
+                    else
+                    {
+                        return Right(index);
+                    }
+                }
 
-public:
+            }
+        }
+    }
+    
+     
+    
+
+
     /**
    * Heap constructor
    */
@@ -196,13 +272,20 @@ public:
     /**
      * For test our heap !!!  
      */
-    void Print() {
-        for (int i = 1; i <= end - 1; i++) {
+     void Print() 
+    {
+        cout << " The Heap " << " ";
+        for (int i = 1; i <= end-1; i++)
+        {
+         
             cout << H[i];
-            if (i < end - 1) {
-                cout << "->";
+            if (i < end - 1)
+            {
+                
+                cout << "->" << " ";
             }
         }
+        cout << endl;
     }
 
     /**
@@ -214,22 +297,62 @@ public:
      */
     int Remove() {
         int temp = H[1];
-        H[1] = H[end];
+        H[1] = H[end]; // removed root 
         --end;
 
         return temp;
     }
+
 };
 
 int main() {
-    Heap H;
+   Timer testMethodTimer;
+   double timeItTook;
+   Heap Test1;  // min heap
+   Heap Test2;  // min heap
 
-    H.Insert(17);
-    H.Insert(11);
+   int Arraytest[11] = { 25,22,18,28,1,30,17,50,33,7,9 };
+   int *A = Arraytest ;
 
-    for (int i = 1; i <= 10; i++) {
-        H.Insert(i);
-    }
+  
+   testMethodTimer.Start();                       // Starting timer
+   Test2.Heapify(A, 11);                          // Testing if Heapify works
+   testMethodTimer.End();                         // Stoping timer
 
-    H.Print();
+   timeItTook = testMethodTimer.Seconds();        // Time it took 
+   cout << "*********************************************************" << endl;
+   cout << " Ladelle Augustine " << endl;
+   cout << " Assignment 7 - Heapify " << endl;
+   cout << " CMPS 3013 " << endl; 
+
+   cout << " ######################################################## " << endl;
+   cout << " Method Used: Heapify " << endl;
+   cout << " Time complexity O(n) " <<endl;
+   cout << " Time Taken by Method To Run: " << timeItTook << " Second(s)" << " " << endl ;
+   cout << " ------------------------------------------------------- " << endl; 
+   Test2.Print();
+
+  cout  << " ________________________________________________________" << endl; 
+  
+   testMethodTimer.Start();                         // starting timer                                                 // Insert method used
+    Test1.Insert(26);
+    Test1.Insert(23);
+    Test1.Insert(19);
+    Test1.Insert(29);
+    Test1.Insert(2);
+    Test1.Insert(31);
+    testMethodTimer.End();                          // stoping timer
+
+    timeItTook = testMethodTimer.Seconds();         // time it took 
+
+
+    cout << " Method Used: Insert " << endl;
+    cout << " Time Taken by Method To Run: " << timeItTook << " Second(s)" << " " << endl;
+    cout << " Time complexity O(log n) " << endl;
+    cout << " ------------------------------------------------------- " << endl;
+    Test1.Print();
+    cout << " #######################################################" << endl;
+
+     system("pause");
+    return 0;
 }

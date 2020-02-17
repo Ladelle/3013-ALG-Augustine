@@ -16,16 +16,16 @@ public:
   Heap(int s){
     size = s;
     H = new int[s];
-    end = 1;
+    end = 1;           
   }
 
-  void Insert(int x){
+  void Insert(int x){ // adding element as a leaf
     H[end] = x;
     BubbleUp(end);
     end++;
   }
 
-  void BubbleUp(int index){
+  void BubbleUp(int index){ 
     //check parent 
     if(Parent(index) >= 1){
       while(index > 1 && H[index] < H[Parent(index)]){
@@ -34,14 +34,14 @@ public:
       }
     }
   }
-
+// swapping this is a min heap
   void Swap(int i, int j){
     int temp = H[i];
     H[i] = H[j];
     H[j] = temp;
   }
 
-  int Remove(){
+  int Remove(){  // removes the root element anytime removing with heap it is just to move root jsut how heaps are.
     int temp = H[1];
     H[1] = H[end];
     --end;
@@ -60,6 +60,7 @@ public:
   // children and returns the index
   int PickChild(int index){
     // if(Left(index) >= end){
+
     //   return -1;
     // }
       
@@ -86,7 +87,7 @@ public:
     return 2*index+1;
   }
 
-  bool OnHeap(int index){
+  bool OnHeap(int index){ // less than or equal to end 
     return index < end;
   }
 
@@ -101,7 +102,7 @@ public:
   }
 
 };
-
+ 
 int main() {
   Heap H;
 
@@ -114,4 +115,5 @@ int main() {
 
   H.Print();
  
+ system ("pause");
 }
