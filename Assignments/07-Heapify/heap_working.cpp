@@ -13,6 +13,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
+#include <fstream>
 #include "timer.hpp"
 #include <algorithm>
 
@@ -272,20 +273,21 @@ public:
     /**
      * For test our heap !!!  
      */
-     void Print() 
+    void Print(ostream& out)
     {
-        cout << " The Heap " << " ";
+        out << " The Heap " << " ";
         for (int i = 1; i <= end-1; i++)
         {
          
-            cout << H[i];
+            out << H[i];
             if (i < end - 1)
             {
                 
-                cout << "->" << " ";
+                out << "->" << " ";
             }
         }
-        cout << endl;
+        out << endl;
+    
     }
 
     /**
@@ -306,33 +308,33 @@ public:
 };
 
 int main() {
+   ofstream out("outfile.txt");// printing to outfile 
+
    Timer testMethodTimer;
    double timeItTook;
-   Heap Test1;  // min heap
-   Heap Test2;  // min heap
+   Heap Test1;
+   Heap Test2;
 
    int Arraytest[11] = { 25,22,18,28,1,30,17,50,33,7,9 };
    int *A = Arraytest ;
 
-  
+   
    testMethodTimer.Start();                       // Starting timer
    Test2.Heapify(A, 11);                          // Testing if Heapify works
    testMethodTimer.End();                         // Stoping timer
 
    timeItTook = testMethodTimer.Seconds();        // Time it took 
-   cout << "*********************************************************" << endl;
-   cout << " Ladelle Augustine " << endl;
-   cout << " Assignment 7 - Heapify " << endl;
-   cout << " CMPS 3013 " << endl; 
+   out << "*********************************************************" << endl;
+   out << " Ladelle Augustine " << endl;
+   out << " Assignment 7 - Heapify " << endl;
+   out << " CMPS 3013 " << endl; 
 
-   cout << " ######################################################## " << endl;
-   cout << " Method Used: Heapify " << endl;
-   cout << " Time complexity O(n) " <<endl;
-   cout << " Time Taken by Method To Run: " << timeItTook << " Second(s)" << " " << endl ;
-   cout << " ------------------------------------------------------- " << endl; 
-   Test2.Print();
-
-  cout  << " ________________________________________________________" << endl; 
+   out << " ######################################################## " << endl;
+   out << " Method Used: Heapify " << endl;
+   out << " Time Taken by Method To Run: " << timeItTook << " Second(s)" << " " << endl ;
+   out << " ------------------------------------------------------- " << endl; 
+   Test2.Print(out);
+  out  << " ________________________________________________________" << endl; 
   
    testMethodTimer.Start();                         // starting timer                                                 // Insert method used
     Test1.Insert(26);
@@ -346,13 +348,13 @@ int main() {
     timeItTook = testMethodTimer.Seconds();         // time it took 
 
 
-    cout << " Method Used: Insert " << endl;
-    cout << " Time Taken by Method To Run: " << timeItTook << " Second(s)" << " " << endl;
-    cout << " Time complexity O(log n) " << endl;
-    cout << " ------------------------------------------------------- " << endl;
-    Test1.Print();
-    cout << " #######################################################" << endl;
+    out << " Method Used: Insert " << endl;
+    out << " Time Taken by Method To Run: " << timeItTook << " Second(s)" << " " << endl;
+    out << " ------------------------------------------------------- " << endl;
+    Test1.Print(out);
+    out << " #######################################################" << endl;
 
+    out.close();
      system("pause");
     return 0;
 }
