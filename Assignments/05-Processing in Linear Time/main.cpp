@@ -89,9 +89,9 @@ int main()
             
             cout << var << "\n\n" << endl;
            
-         }
+        }
         
-        List.search(var);                                  // searches for var
+        List.search(var) ;                                  // searches for var
        
        
                                                           // hitting enter sets word back to empty
@@ -106,7 +106,7 @@ int main()
         cout << List.Itemsfound() << "  found in : " << s << "  seconds" << endl;
 
         List.DisplayTenW();                                // displays ten words
-        cout << "\n\n\n\n ";
+        cout << "\n\n\n\n\n\n\n\n\n ";
     
     }
 

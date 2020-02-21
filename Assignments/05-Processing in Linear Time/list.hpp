@@ -162,7 +162,7 @@ public:
 			head = head->Next;
 			delete temp;
 			temp = NULL;
-			size--;
+			Size--;
 
 
 		}
