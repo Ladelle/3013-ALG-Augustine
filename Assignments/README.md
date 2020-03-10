@@ -9,5 +9,5 @@
 |06-P03    |   [06-ON HOLD -Linear Time]|Time Complexity Compared|
 |07-H02| [07-Heapify](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/07-Heapify)| Heapify|
 |08-T01|[Test](https://github.com/rugbyprof/3013-Algorithms/blob/master/Assignments/08-T01/solution.pdf)|Test Review|
-|09-H03|Homework|Homework|
+|09-H03|[Homework](https://github.com/Ladelle/3013-ALG-Augustine/blob/master/Assignments/09-Homework/README.md)|Homework|
 
