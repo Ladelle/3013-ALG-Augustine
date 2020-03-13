@@ -8,10 +8,10 @@
 - Complexities : **O(1), O(n log n), O(n), O(n<sup>2</sup>), O(log n), O(n!) , O(h)**
 #
 1.Finding the max element in an unordered stack would require ______________ operations?
-  * < O(n), because finding the max element searches through all elements in the stack. >
+  1. < O(n), because finding the max element searches through all elements in the stack. >
              
 2. Finding the min element in an unordered queue would require _____________ operations?
-  * < O(n), because finding the min element searches through  all elements in the queue. >
+  1. < O(n), because finding the min element searches through  all elements in the queue. >
 
 3. Finding some element in some Binary Search Tree would require _____________ operations?
 < O(h) or O(n), because O(h) finds the element based on the height of the tree , O(n) when height of the tree becomes n.>
