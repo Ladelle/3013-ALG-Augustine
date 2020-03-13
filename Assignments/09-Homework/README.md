@@ -7,7 +7,8 @@
 
 - Complexities : **O(1), O(n log n), O(n), O(n<sup>2</sup>), O(log n), O(n!) , O(h)**
 1.Finding the max element in an unordered stack would require ______________ operations?
-< O(n), because finding the max element searches through all elements in the stack. >
+Markup: 
+* < O(n), because finding the max element searches through all elements in the stack. >
              
 2. Finding the min element in an unordered queue would require _____________ operations?
 < O(n), because finding the min element searches through  all elements in the queue. >
