@@ -11,6 +11,6 @@
 |08-T01|[Test](https://github.com/rugbyprof/3013-Algorithms/blob/master/Assignments/08-T01/solution.pdf)|Test Review|
 |09-H03|[Homework](https://github.com/Ladelle/3013-ALG-Augustine/blob/master/Assignments/09-Homework/README.md)|Homework|
 |10-A03|[11172 Tutorial](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/11172)| Testing Tutorial|
-|10-P04|[Graph Connectivity]|UVA problem|
-|11-P05|[STL Maps]|UVA problem|
+|10-P04|[459 Graph Connectivity](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/459)|UVA problem|
+|11-P05|[484 STL Maps](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/484)|UVA problem|
 
