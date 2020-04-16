@@ -13,4 +13,5 @@
 |10-A03|[11172 Tutorial](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/11172)| Testing Tutorial|
 |10-P04|[459 Graph Connectivity](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/459)|UVA problem|
 |11-P05|[484 STL Maps](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/484)|UVA problem|
-
+|12-P06|[11597 Spanning Subtree](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/11597)| UVA problem|
+|13-P07|[1112 Mice & Maze](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/1112)|UVA problem|
