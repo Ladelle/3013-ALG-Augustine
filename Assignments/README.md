@@ -15,3 +15,4 @@
 |11-P05|[484 STL Maps](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/484)|UVA problem|
 |12-P06|[11597 Spanning Subtree](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/11597)| UVA problem|
 |13-P07|[1112 Mice & Maze](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/1112)|UVA problem|
+|14-P08|[Ferry 1,2,3](https://github.com/Ladelle/3013-ALG-Augustine/tree/master/Assignments/Ferry%20Loading%201%2C2%2C3)|UVA problems|
