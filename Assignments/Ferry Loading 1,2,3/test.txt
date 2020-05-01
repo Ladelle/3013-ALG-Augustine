@@ -1,0 +1,80 @@
+# Ladelle Augustine
+# Problem 10901
+# Due: 04/27/2020
+# Program 08
+# Ferry Loading- Third Version
+# Queue based approach 
+
+def main():
+    # the number of cases in input file.
+   case = int(input()) #reading in 2
+   ferry = []
+   time = 0
+   print("Case:", case)
+   while (case > 0): # 2,1
+        car,t,m = map(int, input().split()) #2 10 10 , 2 10 3
+        print("Car:", car, "Time:", t, "Lines", m)
+        case = case - 1
+   print("The end")
+    # for i in range (1,m): # number of lines to read 10 ,3
+    #    t1 , side = [int(i) if i.isdigit() else i for i in input().split()] # 0, left
+    #    if(side == "left"):
+    #        ferry.append(t,side)
+           
+    #    else: # right
+    #        ferry.append(t,side)
+    # for i in range(len(ferry)):
+    #     print(ferry) 
+        
+         
+    # curr = 0
+    # opp = 1 # right
+    # le_rig = 0 # left
+    
+    # while not ferry[0] or not ferry[1] :
+    #     t3 = curr + t1
+    #     if ( not ferry[le_rig]):
+    #         if(curr < ferry[opp]):
+    #             total_t =ferry[opp] + t1
+                
+    #     else:
+    #         case =
+    
+    
+if __name__== "__main__":
+    main()    
+
+      side = 0
+        time = 0
+        
+        while (not sides[0].empty() or  not sides[1].empty()):
+            if(sides[0].empty()):
+                next_car = total_T[sides[1].front()]
+            else:
+                if (sides[1].empty()):
+                    next_car = total_T[sides[1].front()]
+                else: 
+                    next_car = min(total_T[sides[0].front()],total_T[sides[1].front()])
+
+               
+            curr_car = 0
+            time = max(time,next_car)
+            while( not sides[side].empty() and total_T[sides[side].front()]<= time and curr_car < car):
+                curr_car = curr_car + 1
+                total_T[sides[side].front()]= time + t
+                sides[side].pop()
+                
+            time = time + t
+            side = (side + 1) % 2
+            
+        case = case - 1
+        for i in range (0,m):
+            print(t[i], '\n')
+        if(case):
+            print("\n")
+      
+    
+    
+
+if __name__== "__main__":
+    main()s
